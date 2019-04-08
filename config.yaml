@@ -1,0 +1,18 @@
+
+Trainee_Name: 'Martin Yeo'
+Skills_By_Date:
+  - date    : 2019-04-08
+    Skills  :
+      Skill_1 : 2
+      Skill_2 : 5
+      Skill_3 : 1
+      Skill_4 : 1
+      Skill_5 : 3
+
+  - date    : 2019-04-12
+    Skills  :
+      Skill_1 : 3
+      Skill_2 : 5
+      Skill_3 : 2
+      Skill_4 : 2
+      Skill_5 : 4
