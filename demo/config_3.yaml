@@ -1,0 +1,31 @@
+Chart Size  :
+  Width_   : 6
+  Height  : xxx
+Skills By Date:
+  - Date      : 2019-04-08
+    Colour    : '#307ecc'
+    Skills    :
+      Skill 2 : 5
+      Skill 3 : 1
+      Skill 1 : 2
+      Skill 4 : 1
+      Skill 5 : 3
+
+  - Date      : 2019-05-01
+    Colour    : ultra violet
+    Skills    :
+      Skill 1 : 4
+      Skill 2 : 5
+      Skill 3 : 3.5
+      Skill 4 : 3
+      Skill 5 : 4
+      Skill 6 : 2.2
+
+  - Date: 2019-04-22
+    Skills:
+      Skill 1 : moderate
+      Skill 2 : 5
+      Skill 3 : 2
+      Skill 4 : 2
+      PyYAML  : 3
+      Skill 6 : 1

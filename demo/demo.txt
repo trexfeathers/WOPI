@@ -1,0 +1,5 @@
+module load scitools
+cd /net/home/h01/myeo/PycharmProjects/WOPI
+python RadarSkillPlot.py -c config_1.yaml -s save_1
+python RadarSkillPlot.py -c config_2.yaml -s save_2
+python RadarSkillPlot.py -c config_3.yaml -s save_3

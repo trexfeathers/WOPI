@@ -1,0 +1,31 @@
+Run demo.txt:
+
+    module load scitools
+    cd /net/home/h01/myeo/PycharmProjects/WOPI
+    python RadarSkillPlot.py -c demo/config_1.yaml -s demo/save_1
+    python RadarSkillPlot.py -c demo/config_2.yaml -s demo/save_2
+    python RadarSkillPlot.py -c demo/config_3.yaml -s demo/save_3
+
+Open 3 configs and an image browser
+
+Show config_1 and save_1:
+    Accepts a title and dimensions
+    Key list is Skills By Date - contains the plot-able data
+        Includes a date for the label
+        Can accept a colour
+        Dictionary of skill names and their values
+
+Show config_2 and save_2:
+    Skills By Date is a list of dictionaries, allowing it to plot multiple series of skill values
+
+Show config_3 and save_3:
+    Robust to changes/errors in the config file
+        No title
+        Width has the wrong name
+        Height has the wrong value
+        Skills not sorted consistently
+        Some wrong/missing colours
+        New skills, different names
+        Some skills not numeric
+        Dates not sorted
+    Can accept hex codes for precise colours
