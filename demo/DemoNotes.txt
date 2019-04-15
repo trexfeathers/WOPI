@@ -19,13 +19,34 @@ Show config_2 and save_2:
     Skills By Date is a list of dictionaries, allowing it to plot multiple series of skill values
 
 Show config_3 and save_3:
-    Robust to changes/errors in the config file
+    Robust to changes/errors in the config file, with notification where necessary
         No title
         Width has the wrong name
         Height has the wrong value
+        Dates not sorted
         Skills not sorted consistently
         Some wrong/missing colours
         New skills, different names
         Some skills not numeric
-        Dates not sorted
+        Float or integer skills
     Can accept hex codes for precise colours
+
+Run this to show the display behaviour:
+    python RadarSkillPlot.py -c demo/config_2.yaml
+
+Run these to show the bad save handling - inherits message from MatPlotLib:
+    python RadarSkillPlot.py -c demo/config_2.yaml -s bad_path/save
+    python RadarSkillPlot.py -c demo/config_2.yaml -s demo/save_4.aaaa
+
+Red text errors are being created using a function that writes to a log file, and outputs as stderr
+
+Run these to demonstrate critical errors:
+    python RadarSkillPlot.py
+    python RadarSkillPlot.py -c bad_path.yaml
+    python RadarSkillPlot.py -c demo/config_bad_format.yaml
+    python RadarSkillPlot.py -c demo/config_missing_fields.yaml
+
+Argparse:
+    python RadarSkillPlot.py --help
+    python RadarSkillPlot.py --example
+    python RadarSkillPlot.py --demo

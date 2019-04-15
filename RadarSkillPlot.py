@@ -45,34 +45,40 @@ Non-critical errors
 
 
 def print_success_error(string, is_success=False):
-    # Enhancements over the standard print(), showing green for success (2) and red for error(3).
+    # Enhancements over the standard print(), showing green for success and red for error.
     # Errors use the logging module to output as stderr and be added to the logs.
 
-    logging.basicConfig(level=logging.WARNING)
+    logging.basicConfig(level=logging.ERROR)
+    formatter = logging.Formatter('%(asctime)s %(message)s')
+
+    file_handler = logging.FileHandler('radar_errors.log')
+    file_handler.setFormatter(formatter)
+
     log = logging.getLogger('RadarTest')
+    log.addHandler(file_handler)
 
     if is_success:     # success
         print('\033[;32m' + string + '\033[m')
     elif not is_success:   # error
-        log.error('\n\033[;31m' + string + '\033[m')    # outputs as stderr
+        log.error('\n\033[;31m' + string + '\033[m\n')    # outputs as stderr
     else:
         print(string)
 
 
-def radar_chart(config_path, save_path=''):
+def radar_chart(config_yaml, save_path=''):
     # Generates the radar chart based on the content of the config file.
 
-    # Check that the config file exists, and read content from it.
-    if os.path.isfile(config_path):
-        with open(config_path, 'r') as f:
-            yaml_string = f.read()
-    else:
-        print_success_error('Invalid config path provided. Chart will not be plotted', is_success=False)
-        return
+    # # Check that the config file exists, and read content from it.
+    # if os.path.isfile(config_path):
+    #     with open(config_path, 'r') as f:
+    #         yaml_string = f.read()
+    # else:
+    #     print_success_error('Invalid config path provided. Chart will not be plotted', is_success=False)
+    #     return
 
     # Attempt to parse the config file content as YAML content.
     try:
-        parsed = yaml.load(yaml_string)
+        parsed = yaml.load(config_yaml)
     except yaml.scanner.ScannerError as exception_:
         print_success_error('Invalid YAML format in config file. Chart will not be plotted \nError message: \n\n' +
                             str(exception_), is_success=False)
@@ -104,6 +110,7 @@ def radar_chart(config_path, save_path=''):
             for k, v in skills_list.items():
                 if type(v) not in [int, float, complex]:
                     v = None
+                    print('Date: %s  Skill: %s  is non-numeric - point will not be plotted' % (date_value, str(k)))
                 un_pivoted.append([date_value, k, v])
 
         except (KeyError, ValueError):
@@ -202,32 +209,12 @@ def radar_chart(config_path, save_path=''):
 def main():
     # Initiates the script by handling the arguments passed from the command line.
 
-    cmd_text = 'script to plot progress in Python skills, input via the config file'
-    parser = argparse.ArgumentParser(description=cmd_text)
-    parser.add_argument('-c', '--config',
-                        help='Input path of config YAML file',
-                        action='store')
-    parser.add_argument('-s', '--save',
-                        help=
-                        'Input save path INCLUDING file extension'
-                        'If no valid path is provided, chart will be displayed instead',
-                        action='store')
-    parser.add_argument('-e', '--example',
-                        help='Display example of expected config file format',
-                        action='store_true')
-    args = parser.parse_args()
-
-    # Can't make config or example mandatory since having one OR the other is acceptable. Handle here instead.
-    if args.config is None and not args.example:
-        print('Please supply the path of a config file using -c, or use -h / -e for help / example')
-
-    elif args.example:
-        print('''
-            Please format the config file in line with the following example - YAML syntax
-            Colours can be hex codes if enclosed in quotes
-            Mandatory keys: "Skills By Date", "Date", "Skills"
+    example_yaml = '''
+            # Please format the config file in line with the following example - YAML syntax.
+            # Colours can be hex codes if enclosed in quotes.
+            # Mandatory keys: "Skills By Date", "Date", "Skills".
             
-            Chart Title: Martin Yeo Python Skill Progression
+            Chart Title: DEMO Python Skill Progression
             Chart Size  :
               Width   : 4
               Height  : 4
@@ -243,8 +230,45 @@ def main():
                   Skill 1 : 3
                   Skill 2 : 5.3
                   Skill 5 : 4
-          ''')
+          '''
+
+    cmd_text = 'script to plot progress in Python skills, input via the config file'
+    parser = argparse.ArgumentParser(description=cmd_text)
+    parser.add_argument('-c', '--config',
+                        help='Input path of config YAML file',
+                        action='store')
+    parser.add_argument('-s', '--save',
+                        help=
+                        'Input save path INCLUDING file extension'
+                        'If no valid path is provided, chart will be displayed instead',
+                        action='store')
+    parser.add_argument('-e', '--example',
+                        help='Display example of expected config file format',
+                        action='store_true')
+    parser.add_argument('-d', '--demo',
+                        help='Display the output that will result from the example config',
+                        action='store_true')
+    args = parser.parse_args()
+
+    # Can't make config or example mandatory since having one OR the other is acceptable. Handle here instead.
+    if args.config is None and not args.example and not args.demo:
+        print('Please supply the path of a config file using -c, or use -h / -e / -d for help / example / demo')
+
+    elif args.example:
+        print(example_yaml)
+
+    elif args.demo:
+        radar_chart(example_yaml, args.save)
+
     else:
-        radar_chart(args.config, args.save)
+        # Check that the config file exists, and read content from it.
+        if os.path.isfile(args.config):
+            with open(args.config, 'r') as f:
+                config_yaml = f.read()
+        else:
+            print_success_error('Invalid config path provided. Chart will not be plotted', is_success=False)
+            return
+
+        radar_chart(config_yaml, args.save)
 
 main()
