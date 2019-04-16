@@ -149,7 +149,7 @@ def extract_data(skills_by_date_):
                     print('Date: %s  Skill: %s  is non-numeric - point will not be plotted' % (date_value, str(k)))
                 un_pivoted_.append([date_value, k, v])
 
-        except (KeyError, ValueError):
+        except (KeyError, ValueError, AttributeError):
             # If any data was added before the exception occurred, use date_value to remove this data from un_pivoted_.
             # If the error occurred before date_value was set, it will have a None value and no data will be removed.
             un_pivoted_[:] = [x for x in un_pivoted_ if x[0] != date_value]  # list comprehension

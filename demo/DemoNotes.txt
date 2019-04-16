@@ -50,3 +50,7 @@ Argparse:
     python RadarSkillPlot.py --help
     python RadarSkillPlot.py --example
     python RadarSkillPlot.py --demo
+
+
+SKIP DATES
+HAVE TIME FOR MORE DETAIL
