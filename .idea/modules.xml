@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Sandbox/.idea/Sandbox.iml" filepath="$PROJECT_DIR$/../Sandbox/.idea/Sandbox.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/WOPI.iml" filepath="$PROJECT_DIR$/.idea/WOPI.iml" />
     </modules>
   </component>
